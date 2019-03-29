@@ -44,4 +44,41 @@
       {{image.caption| safe}}
   {% endautoescape %}
   <div class="container" style="margin: 50px">
-  
+    <br>
+    <div class="text-xs px-6 py-4 uppercase text-grey" style=" margin-left: -30px"> {{image.pub_date | timesince}}
+    </div>
+      <hr style="width: 400px; margin-left: 0px">
+      <div class="mt-4 border-t border-grey-light mx-4 py-4">
+        
+        <form method="post" action="/comment/{{image.id}}" enctype="multipart/form-data">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-4">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          </div>
+          </div>
+          </div>
+          <input type="submit" class="btn btn-primary btn-sm" value="Submit">
+          <input type="hidden" name="next" value="{{next}}">
+        </form>
+    
+      </div>
+
+{% for comment in image.comment.all %}
+<div class="row">
+  <div class="col-md-1">
+    <p style=" font-weight: bold; "><a style="color: black" href="/"> {{comment.user}}</p>
+  </div>
+  <div class="col-md-4" style="margin-left: -25px">
+    <p>{{comment.comment}}</p>
+  </div>
+</div>
+{% endfor %}
+</div>
+  </div>
+<!-- </div>
+</div> -->
+{% endfor %}
+</body>
+
