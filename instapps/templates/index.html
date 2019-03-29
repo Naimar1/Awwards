@@ -81,4 +81,19 @@
 </div> -->
 {% endfor %}
 </body>
+</html>
+
+ <!--   {% for image in image%} -->
+
+   <div>
+  <img src="{{image.image.url}}" class="master-card" style="width:100px;height:100px;border-radius:50%;padding:15px; "><strong style="margin-top: 60px">{{image.user}}</strong>
+  <p style="margin-left: 80px; margin-top: 40px ;color: #BDBDBD">{{image.pub_date | timesince}} </p>
+</div>
+<!--   {% endfor %} -->
+
+</div><br>
+
+{% endblock %}
+
+</div>
 
