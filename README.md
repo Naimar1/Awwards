@@ -13,3 +13,7 @@ Before you do anything else you have to login , if you not yet registered you ha
 * atom .
 * run : python manage.py runserver
 * link to visit: https://instapps.herokuapp.com/
+
+## Known Bugs
+Hope that my codes is clear and understandable,
+There are no errors, by mistake if you find them please contact me for the below address.
