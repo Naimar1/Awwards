@@ -143,4 +143,17 @@ def site(request,site_id):
         form = RatingForm()
 
     return render(request,"site.html",{"project":project,"profile":profile,"ratings":ratings,"form":form})
+@login_required(login_url='/accounts/login/')
+def search_results(request):
+    if 'project' in request.GET and request.GET["project"]:
+        search_term = request.GET.get("project")
+        searched_landing_pages = Project.search_by_title(search_term)
+        message=f"{search_term}"
+
+        return render(request,'all-pages/search.html',{"message":message,"landing_pages":searched_landing_pages})
+
+    else:
+        message="nothing to display"
+        return render(request,'all-pages/search.html',{"message":message})
+
 
