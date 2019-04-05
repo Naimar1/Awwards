@@ -1,0 +1,32 @@
+{%extends 'all-pages/base.html'%} 
+{% block content %}
+<div class="container">
+
+  <div class="row">
+    {% if landing_pages%}
+      <h2>Found {{ landing_pages|length }} of searched term {{message}}</h2>
+    {% else %}
+      <h2> No project found and  {{message}}</h2>
+    {% endif %}
+
+  </div>
+
+  <div class="row">
+
+  {% if landing_pages%}
+    {% for landing_page in landing_pages %}
+      <div class="col-sm-6 col-md-3">
+          <strong><h2 style="color:brown; text-align: center;">{{landing_page.title}}</h2></strong>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <img style=" margin-top: 20px; margin-bottom: 20px; width:380px; height:280px; border-radius: 30px;" src="{{landing_page.landing_page.url}}" alt="Image" width='200' length='200'>
+        {% autoescape on %}
+        <strong>Description: </strong>{{landing_page.description|safe}}
+        
+        <strong>Link to visit: </strong><a href="{{landing_page.link|safe}}">{{landing_page.link|safe}}</a>         
+      {% endautoescape %}
+    </div>
+    {% endfor %}
+  {% endif %}
+  </div>
+</div>
+{% endblock %}
