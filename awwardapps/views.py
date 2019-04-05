@@ -78,4 +78,13 @@ def new_project(request):
 
     return render(request,'new_project.html',{"form":form})
 
+@login_required(login_url='/accounts/login/')
+def profile(request):
+    current_user = request.user
+    profile = Profile.objects.all()
+    projects=Project.objects.filter(username=current_user)
+
+    return render(request,'profile.html',{"projects":projects,"profile":profile})
+
+
 
