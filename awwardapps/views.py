@@ -86,5 +86,61 @@ def profile(request):
 
     return render(request,'profile.html',{"projects":projects,"profile":profile})
 
+@login_required(login_url='/accounts/login/')
+def site(request,site_id):
+    current_user = request.user
+    profile =Profile.objects.get(username=current_user)
 
+    try:
+        project = Project.objects.get(id=site_id)
+    except:
+        raise ObjectDoesNotExist()
+
+    try:
+        ratings = Rating.objects.filter(project_id=site_id)
+        design = Rating.objects.filter(project_id=site_id).values_list('design',flat=True)
+        usability = Rating.objects.filter(project_id=site_id).values_list('usability',flat=True)
+        content = Rating.objects.filter(project_id=site_id).values_list('content',flat=True)
+        total_design=0
+        total_usability=0
+        total_content = 0
+        print(design)
+        for rate in design:
+            total_design+=rate
+        print(total_design)
+
+        for rate in usability:
+            total_usability+=rate
+        print(total_usability)
+
+        for rate in content:
+            total_content+=rate
+        print(total_content)
+
+        grade=(total_design+total_content+total_usability)/3
+
+        print(grade)
+
+        project.design = total_design
+        project.usability = total_usability
+        project.content = total_content
+        project.grade = grade
+
+        project.save()
+
+    except:
+        return None
+
+    if request.method =='POST':
+        form = RatingForm(request.POST,request.FILES)
+        if form.is_valid():
+            rating = form.save(commit=False)
+            rating.project= project
+            rating.profile = profile
+            rating.grade = (rating.design+rating.usability+rating.content)/2
+            rating.save()
+    else:
+        form = RatingForm()
+
+    return render(request,"site.html",{"project":project,"profile":profile,"ratings":ratings,"form":form})
 
