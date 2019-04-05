@@ -1,4 +1,4 @@
-#!/home/wecode/Documents/The-Moringa-Tribune/virtual/bin/python
+#!/home/wecode/Documents/Awwards/virtual/bin/python
 from django.core import management
 
 if __name__ == "__main__":
