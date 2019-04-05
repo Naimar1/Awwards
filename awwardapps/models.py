@@ -41,3 +41,23 @@ class Project(models.Model):
         return project
 
 
+class Profile(models.Model):
+    username = models.CharField(default='User',max_length=30)
+    imgprofl = models.ImageField(upload_to = "profile/",null=True)
+    bio = models.TextField(default='',blank = True)
+    name =models.CharField(max_length=100)
+    email = models.EmailField() 
+
+    def __str__(self):
+        return self.name
+    
+    def save_profile(self):
+    	self.save()
+
+class Rating(models.Model):
+    design = models.IntegerField(blank=True,default=0)
+    usability = models.IntegerField(blank=True,default=0)
+    content = models.IntegerField(blank=True,default=0)
+    grade = models.IntegerField(blank=True,default=0)
+    project = models.ForeignKey(Project,on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile,on_delete=models.CASCADE)
