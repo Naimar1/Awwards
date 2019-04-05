@@ -164,3 +164,18 @@ def user_profile(request,username):
     projects=Project.objects.filter(username=user)
 
     return render(request,'user-profile.html',{"projects":projects,"profile":profile})
+
+@login_required(login_url='/accounts/login/')
+def upload_image(request):
+    current_user = request.user
+    title = 'Image'
+    if request.method == 'POST':
+        form = UploadImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.user_key = current_user
+            image.save()
+        
+    else:
+        form = ProjectForm()
+    return render(request, 'all-pages/upload_project.html', {"form": form,"current_user":current_user,"title":title})
