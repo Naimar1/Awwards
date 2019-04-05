@@ -4,6 +4,7 @@
 ## Description
 
 This project is about creating a project like Awwards,The application will allow a user to post a project he/she has created and get it reviewed by his/her peers. even you can see the current projects that have been posted.
+The user can be able to iew posted projects and their details,Search for projects,View my profile page etc..
 
 ## Setup/Installation Requirements
 * git clone: https://github.com/Naimar1/Awwards.git
