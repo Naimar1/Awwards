@@ -26,3 +26,22 @@ def index(request):
     form = RatingForm()
     return render(request, 'index.html', {"title":title,"image_posts":image_posts,"form":form})
 
+@login_required(login_url='/accounts/login/')
+def rating(request,id):
+    current_user = request.user
+    users = User.objects.get(pk=current_user.id)
+    landing_pages = Project.objects.get(id=id)
+    print(users)
+    if request.method == 'POST':
+        form = RatingForm(request.POST)
+
+        if form.is_valid():
+            rating = form.save(commit=False)
+            ratingt.user = users
+       
+            rating.landing_page=landing_pages
+            rating.save()
+        return redirect('index')
+    else:
+        return redirect('index') 
+
