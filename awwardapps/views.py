@@ -43,7 +43,7 @@ def rating(request,id):
             rating.save()
         return redirect('index')
     else:
-        return redirect('index') 
+        return redirect('index')    
 
 @login_required(login_url='/accounts/login/')
 def create_profile(request):
@@ -143,6 +143,7 @@ def site(request,site_id):
         form = RatingForm()
 
     return render(request,"site.html",{"project":project,"profile":profile,"ratings":ratings,"form":form})
+
 @login_required(login_url='/accounts/login/')
 def search_results(request):
     if 'project' in request.GET and request.GET["project"]:
@@ -156,7 +157,6 @@ def search_results(request):
         message="nothing to display"
         return render(request,'all-pages/search.html',{"message":message})
 
-
 @login_required(login_url='/accounts/login/')
 def user_profile(request,username):
     user = User.objects.get(username=username)
@@ -164,7 +164,6 @@ def user_profile(request,username):
     projects=Project.objects.filter(username=user)
 
     return render(request,'user-profile.html',{"projects":projects,"profile":profile})
-
 @login_required(login_url='/accounts/login/')
 def upload_image(request):
     current_user = request.user
@@ -179,6 +178,7 @@ def upload_image(request):
     else:
         form = ProjectForm()
     return render(request, 'all-pages/upload_project.html', {"form": form,"current_user":current_user,"title":title})
+
 @login_required(login_url='/accounts/login/')
 def upload_profile(request):
     current_user = request.user 
@@ -209,3 +209,15 @@ def upload_profile(request):
 
 
     return render(request,'upload_profile.html',{"title":title,"current_user":current_user,"form":form})
+
+class ProfileList(APIView):
+    def get(self, request, format=None):
+        all_profiles = Profile.objects.all()
+        serializers = ProfileSerializer(all_profiles, many=True)
+        return Response(serializers.data)
+
+class ProjectList(APIView):
+    def get(self, request, format=None):
+        all_projects = Project.objects.all()
+        serializers = ProjectSerializer(all_projects, many=True)
+        return Response(serializers.data)
