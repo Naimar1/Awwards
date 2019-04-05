@@ -26,3 +26,8 @@ Don't hesitate to contact me if you get a confusion or any other question,sugges
 * Tel:0788358969
 * email:naiglyme1@gmail.com
 
+### License
+
+* MIT License
+* Copyright (c) 2019 NAIMA NIYIGENA
+
